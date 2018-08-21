@@ -1,25 +1,25 @@
 /******************************************************************************
- * Copyright (C) 2017 by Alex Fosdick - University of Colorado
+ * Copyright (C) 2018 by Viviana Quirama
  *
  * Redistribution, modification or use of this software in source or binary
- * forms is permitted as long as the files maintain this copyright. Users are 
- * permitted to modify this and use it to learn about the field of embedded
- * software. Alex Fosdick and the University of Colorado are not liable for any
- * misuse of this material. 
+ * forms is permitted as long as the files maintain this copyright. The author 
+ * is not liable for any misuse of this material. 
  *
  *****************************************************************************/
 /**
- * @file <Add File Name> 
- * @brief <Add Brief Description Here >
+ * @file stats.c 
+ * @brief Implementation file for statistical analytics on a dataset 
  *
- * <Add Extended Description Here>
+ * This file contains the implementations of functions that allow to analize
+ * an array of unsigned char data items and report analytics on the maximum, 
+ * minimum, mean, and median of the data set. In addition, it is possible to 
+ * reorder this data set from large to small and print the data to the screen 
+ * in a nicely formatted presentation.
  *
- * @author <Add FirsName LastName>
- * @date <Add date >
+ * @author Viviana Quirama
+ * @date 22/08/2018
  *
  */
-
-
 
 #include <stdio.h>
 #include "stats.h"
@@ -40,4 +40,38 @@ void main() {
 
 }
 
-/* Add other Implementation File Code Here */
+
+void print_statistics(unsigned char * ptr, unsigned int size){
+
+}
+
+
+void print_array(unsigned char * ptr, unsigned int size){
+
+}
+
+
+int find_median(unsigned char * ptr, unsigned int size){
+
+}
+
+
+int find_mean(unsigned char * ptr, unsigned int size){
+
+}
+
+
+int find_maximum(unsigned char * ptr, unsigned int size){
+
+}
+
+
+int find_minimum(unsigned char * ptr, unsigned int size){
+
+}
+
+
+void sort_array(unsigned char * ptr, unsigned int size){
+
+}
+
