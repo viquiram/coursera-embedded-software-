@@ -20,7 +20,3 @@
 ###     stats.c - Implementation file for C-programming code
 ###     stats.h - Header file for C-programming code
 ###     README.md - Information of the author and the project
-
-### In order to compile this application, you must add the -lm option, since it
-### uses the math library:
-###     gcc -o stats.out stast.c -lm

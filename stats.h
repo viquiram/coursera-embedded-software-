@@ -56,7 +56,7 @@ void print_array(unsigned char * ptr, unsigned int size);
  *
  * @return Median value (rounded down to the nearest integer) of the dataset
  */
-int find_median(unsigned char * ptr, unsigned int size);
+unsigned char find_median(unsigned char * ptr, unsigned int size);
 
 
 /**
@@ -67,7 +67,7 @@ int find_median(unsigned char * ptr, unsigned int size);
  *
  * @return Mean value (rounded down to the nearest integer) of the dataset
  */
-int find_mean(unsigned char * ptr, unsigned int size);
+unsigned char find_mean(unsigned char * ptr, unsigned int size);
 
 
 /**
@@ -78,7 +78,7 @@ int find_mean(unsigned char * ptr, unsigned int size);
  *
  * @return Maximum value of the dataset
  */
-int find_maximum(unsigned char * ptr, unsigned int size);
+unsigned char find_maximum(unsigned char * ptr, unsigned int size);
 
 
 /**
@@ -89,7 +89,7 @@ int find_maximum(unsigned char * ptr, unsigned int size);
  *
  * @return Minimum value of the dataset
  */
-int find_minimum(unsigned char * ptr, unsigned int size);
+unsigned char find_minimum(unsigned char * ptr, unsigned int size);
 
 
 /**

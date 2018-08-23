@@ -22,7 +22,6 @@
  */
 
 #include <stdio.h>
-#include <math.h>
 #include "stats.h"
 
 /* Size of the Data Set */
@@ -73,8 +72,8 @@ void print_array(unsigned char * ptr, unsigned int size){
 }
 
 
-int find_median(unsigned char * ptr, unsigned int size){
-    int median;
+unsigned char find_median(unsigned char * ptr, unsigned int size){
+    unsigned char median;
     sort_array(ptr, size);
     if (size%2 != 0){
         median = ptr[size/2 + 1];
@@ -86,21 +85,21 @@ int find_median(unsigned char * ptr, unsigned int size){
 }
 
 
-int find_mean(unsigned char * ptr, unsigned int size){
-    int mean;
-    float sum = 0;
-    int i = 0;
+unsigned char find_mean(unsigned char * ptr, unsigned int size){
+    unsigned char mean;
+    unsigned int sum = 0;
+    unsigned int i = 0;
     while(i < size){
         sum += ptr[i++];
     }
-    mean = floor(sum/size);
+    mean = sum/size;
     return mean;
 }
 
 
-int find_maximum(unsigned char * ptr, unsigned int size){
-    int max;
-    int i = 0;
+unsigned char find_maximum(unsigned char * ptr, unsigned int size){
+    unsigned char max;
+    unsigned int i = 0;
     if(size > 0){
         max = ptr[i++];
         while(i < size){
@@ -114,9 +113,9 @@ int find_maximum(unsigned char * ptr, unsigned int size){
 }
 
 
-int find_minimum(unsigned char * ptr, unsigned int size){
-    int min;
-    int i = 0;
+unsigned char find_minimum(unsigned char * ptr, unsigned int size){
+    unsigned char min;
+    unsigned int i = 0;
     if(size > 0){
         min = ptr[i++];
         while(i < size){
@@ -142,7 +141,7 @@ void swap(unsigned char * a, unsigned char * b){
 }
 
 void quick_sort(unsigned char * ptr, unsigned int begin, unsigned int end){
-    int i, j, pivot;
+    unsigned int i, j, pivot;
 
     if (begin < end){
         pivot = ptr[begin];
