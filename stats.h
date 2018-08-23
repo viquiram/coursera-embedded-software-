@@ -119,7 +119,7 @@ void swap(unsigned char * a, unsigned char  * b);
 
 
 /**
- * @brief Function that implements the QuickSort algorithm
+ * @brief Function that implements the QuickSort algorithm in descending order
  *
  * @param ptr Array to be sorted
  * @param begin Starting index
