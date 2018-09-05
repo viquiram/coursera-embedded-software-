@@ -1,13 +1,12 @@
 /******************************************************************************
- * Copyright (C) 2017 by Alex Fosdick - University of Colorado
+ * Copyright (C) 2018 by Viviana Quirama
  *
  * Redistribution, modification or use of this software in source or binary
- * forms is permitted as long as the files maintain this copyright. Users are 
- * permitted to modify this and use it to learn about the field of embedded
- * software. Alex Fosdick and the University of Colorado are not liable for any
- * misuse of this material. 
+ * forms is permitted as long as the files maintain this copyright. The author
+ * is not liable for any misuse of this material.
  *
  *****************************************************************************/
+
 /**
  * @file main.c
  * @brief Main entry point to the C1M2 Assessment
@@ -16,8 +15,8 @@
  * are not to change any of the code, they are instead supposed to compile
  * these files with their makefile.
  *
- * @author Alex Fosdick
- * @date April 1 2017
+ * @author Viviana Quirama
+ * @date 06/09/2018
  *
  */
 #include "platform.h"
@@ -33,7 +32,7 @@ int main(void) {
 
   /* Code below does some arbitrary memory Reads & writes */
   clear_all(buffer, MAX_LENGTH);
-  set_all( ( buffer + 8 ), 43, 2); 
+  set_all( ( buffer + 8 ), 43, 2);
   set_value(buffer, 0, 0x61);
   value = get_value(buffer, 9);
   set_value(buffer, 9, (value + 0x27));
