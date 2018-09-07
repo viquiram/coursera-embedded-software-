@@ -46,19 +46,6 @@ include sources.mk
 # Platform Overrides
 PLATFORM ?= HOST
 
-# Architectures Specific Flags (MSP432)
-LINKER_FILE := ../msp432p401r.lds
-CPU := cortex-m4
-ARCH := thumb
-ARM_ARCH := armv7e-m
-FLOAT_ABI := hard
-FPU := fpv4-sp-d16
-SPECS := nosys.specs
-CROSS_COMPILE := arm-none-eabi-
-GCC_INCLUDE_DIR := /usr/lib/arm-none-eabi/include
-CMSIS_INCLUDE_DIR := ../include/CMSIS
-MSP432_INCLUDE_DIR := ../include/msp432
-
 # Compiler Flags and Defines
 TARGET := c1m2
 CC := gcc
@@ -70,56 +57,60 @@ CFLAGS := -Wall -Werror -g -O0 -std=c99
 CPPFLAGS := -E
 
 ifeq ($(PLATFORM),MSP432)
+	# Architectures Specific Flags
+	LINKER_FILE := ../msp432p401r.lds
+	CPU := cortex-m4
+	ARCH := thumb
+	ARM_ARCH := armv7e-m
+	FLOAT_ABI := hard
+	FPU := fpv4-sp-d16
+	SPECS := nosys.specs
+	PLATFORM_FLAGS = -mcpu=$(CPU) -m$(ARCH) -march=$(ARM_ARCH) \
+        -mfloat-abi=$(FLOAT_ABI) -mfpu=$(FPU) \
+        --specs=$(SPECS)
+
+	CROSS_COMPILE := arm-none-eabi-
 	CC := $(CROSS_COMPILE)$(CC)
 	LD := $(CROSS_COMPILE)$(LD)
 	DUMP := $(CROSS_COMPILE)$(DUMP)
 	SIZE := $(CROSS_COMPILE)$(SIZE)
-	CFLAGS += -mcpu=$(CPU) -m$(ARCH) -march=$(ARM_ARCH) \
-	-mfloat-abi=$(FLOAT_ABI) -mfpu=$(FPU) \
-	--specs=$(SPECS)
-	LDFLAGS += -T $(LINKER_FILE) -mcpu=$(CPU) -m$(ARCH) \
-	-march=$(ARM_ARCH) -mfloat-abi=$(FLOAT_ABI) -mfpu=$(FPU) \
-	--specs=$(SPECS)
-	SOURCES += interrupts_msp432p401r_gcc.c \
-	startup_msp432p401r_gcc.c \
-	system_msp432p401r.c
-	INCLUDES += -I$(GCC_INCLUDE_DIR) \
-	-I$(CMSIS_INCLUDE_DIR) \
-	-I$(MSP432_INCLUDE_DIR)
+	CFLAGS += $(PLATFORM_FLAGS)
+	LDFLAGS += -T $(LINKER_FILE) $(PLATFORM_FLAGS)
 endif
 
 PREP := $(SOURCES:.c=.i)
-ASM := $(SOURCES:.c=.s)
+S := $(SOURCES:.c=.s)
+ASM := $(SOURCES:.c=.asm)
 OBJS := $(SOURCES:.c=.o)
 DEP := $(SOURCES:.c=.d)
 
 %.i : %.c
-	$(CC) $(CPPFLAGS) $< > $@ -D$(PLATFORM) -I$(INCLUDES)
+	$(CC) $(CPPFLAGS) $< > $@ -D$(PLATFORM) $(INCLUDES)
 
-%.asm : $(ASM)
-	$(CC) -c $^ $(CFLAGS)
-	$(CC) $(OBJS) -o $(TARGET).out $(LDFLAGS)
-	$(DUMP) -d $(TARGET).out > $(TARGET).dump
-	for f in *.s; do mv -- "$$f" "$${f%.s}.asm"; done
+%.asm : $(S) $(TARGET)
+	$(DUMP) -S $(TARGET).out > $(TARGET).asm
+	for f in $(S); do mv -- "$$f" "$${f%.s}.asm"; done
 
-$(ASM) : %.s : %.c
-	$(CC) $< -S -o $@ $(CFLAGS) -D$(PLATFORM) -I$(INCLUDES)
+$(S) : %.s : %.c
+	$(CC) $< -S -o $@ $(CFLAGS) -D$(PLATFORM) $(INCLUDES)
 
 $(OBJS) : %.o : %.c
-	$(CC) -c $< $(CFLAGS) -D$(PLATFORM) -I$(INCLUDES)
+	$(CC) -c $< $(CFLAGS) -D$(PLATFORM) $(INCLUDES)
 
 $(DEP) : %.d : %.c
-	$(CC) -M $< -MF $@ -D$(PLATFORM) -I$(INCLUDES)
+	$(CC) -M $< -MF $@ -D$(PLATFORM) $(INCLUDES)
+
+$(TARGET) : $(OBJS)
+	$(CC) $(OBJS) -o $(TARGET).out $(LDFLAGS)
 
 .PHONY: compile-all
 compile-all: $(OBJS)
 
 .PHONY: build
-build: $(OBJS) $(DEP)
-	$(CC) $(OBJS) -o $(TARGET).out $(LDFLAGS)
+build: $(DEP) $(TARGET)
 	$(SIZE) -Ad $(TARGET).out
 
 .PHONY: clean
 clean:
 	rm -f *.i *.d *.s *.asm *.o \
-	$(TARGET).out $(TARGET).map $(TARGET).dump
+	$(TARGET).out $(TARGET).map $(TARGET).asm
