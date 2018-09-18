@@ -23,6 +23,7 @@
 
 #include <stdio.h>
 #include "stats.h"
+#include "platform.h"
 
 /* Size of the Data Set */
 #define SIZE (40)
@@ -35,41 +36,46 @@ void main() {
                               201,   6,  12,  60,   8,   2,   5,  67,
                                 7,  87, 250, 230,  99,   3, 100,  90};
 
-    printf("\r\nInitial dataset:");
+#ifdef VERBOSE
+    PRINTF("\r\nInitial dataset:");
     print_array(test, SIZE);
+#endif
 
-    printf("\r\nStatistical analytics on the dataset:\r\n");
+    PRINTF("\r\nStatistical analytics on the dataset:\r\n");
     print_statistics(test, SIZE);
 
-    printf("\r\nSorted dataset:");
+#ifdef VERBOSE
+    PRINTF("\r\nSorted dataset:");
     print_array(test, SIZE);
-
+#endif
 }
 
 
 void print_statistics(unsigned char * ptr, unsigned int size){
-    printf("\tMinimum: %d\r\n", find_minimum(ptr, size));
-    printf("\tMaximum: %d\r\n", find_maximum(ptr, size));
-    printf("\tMean: %d\r\n", find_mean(ptr, size));
-    printf("\tMedian: %d\r\n", find_median(ptr, size));
+    PRINTF("\tMinimum: %d\r\n", find_minimum(ptr, size));
+    PRINTF("\tMaximum: %d\r\n", find_maximum(ptr, size));
+    PRINTF("\tMean: %d\r\n", find_mean(ptr, size));
+    PRINTF("\tMedian: %d\r\n", find_median(ptr, size));
 }
 
 
+#ifdef VERBOSE
 void print_array(unsigned char * ptr, unsigned int size){
     int i = 0;
     while(i < size){
         if(i%10 == 0){
-            printf("\r\n\t");
+            PRINTF("\r\n\t");
         }
-        printf("%3u", ptr[i++]);
+        PRINTF("%3u", ptr[i++]);
         if(i < size){
-            printf(", ");
+            PRINTF(", ");
         }
         else{
-            printf(".\r\n");
+            PRINTF(".\r\n");
         }
     }
 }
+#endif
 
 
 unsigned char find_median(unsigned char * ptr, unsigned int size){

@@ -43,8 +43,9 @@ void print_statistics(unsigned char * ptr, unsigned int size);
  *
  * @return void
  */
+#ifdef VERBOSE
 void print_array(unsigned char * ptr, unsigned int size);
-
+#endif
 
 /**
  * @brief Given an array of data and a length, returns the median value
