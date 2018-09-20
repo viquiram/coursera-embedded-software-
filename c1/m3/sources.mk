@@ -9,17 +9,20 @@
 #*****************************************************************************
 
 # Add your Source files to this variable
-SOURCES = main.c \
-	  memory.c
+SOURCES = src/main.c \
+	  src/memory.c \
+          src/data.c \
+          src/stats.c \
+          src/course1.c
 
 # Add your include paths to this variable
-INCLUDES = -I../include/common
+INCLUDES = -Iinclude/common
 
 ifeq ($(PLATFORM),MSP432)
-	SOURCES += interrupts_msp432p401r_gcc.c \
-        startup_msp432p401r_gcc.c \
-        system_msp432p401r.c
+	SOURCES += src/interrupts_msp432p401r_gcc.c \
+        src/startup_msp432p401r_gcc.c \
+        src/system_msp432p401r.c
 
-	INCLUDES += -I../include/CMSIS \
-        -I../include/msp432
+	INCLUDES += -Iinclude/CMSIS \
+        -Iinclude/msp432
 endif

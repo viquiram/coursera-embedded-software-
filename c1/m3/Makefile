@@ -47,7 +47,7 @@ include sources.mk
 PLATFORM ?= HOST
 
 # Compiler Flags and Defines
-TARGET := c1m2
+TARGET := c1m3
 CC := gcc
 LD := ld
 DUMP := objdump
@@ -56,9 +56,17 @@ LDFLAGS := -Wl,-Map=$(TARGET).map
 CFLAGS := -Wall -Werror -g -O0 -std=c99
 CPPFLAGS := -E
 
+ifeq ($(VERBOSE),1)
+	CFLAGS += -DVERBOSE
+endif
+
+ifeq ($(COURSE1),1)
+	CFLAGS += -DCOURSE1
+endif
+
 ifeq ($(PLATFORM),MSP432)
 	# Architectures Specific Flags
-	LINKER_FILE := ../msp432p401r.lds
+	LINKER_FILE := ./msp432p401r.lds
 	CPU := cortex-m4
 	ARCH := thumb
 	ARM_ARCH := armv7e-m
@@ -95,7 +103,7 @@ $(S) : %.s : %.c
 	$(CC) $< -S -o $@ $(CFLAGS) -D$(PLATFORM) $(INCLUDES)
 
 $(OBJS) : %.o : %.c
-	$(CC) -c $< $(CFLAGS) -D$(PLATFORM) $(INCLUDES)
+	$(CC) -c $< -o $@ $(CFLAGS) -D$(PLATFORM) $(INCLUDES)
 
 $(DEP) : %.d : %.c
 	$(CC) -M $< -MF $@ -D$(PLATFORM) $(INCLUDES)
@@ -112,5 +120,5 @@ build: $(DEP) $(TARGET)
 
 .PHONY: clean
 clean:
-	rm -f *.i *.d *.s *.asm *.o \
+	rm -f $(PREP) $(DEP) $(S) $(ASM) $(OBJS) \
 	$(TARGET).out $(TARGET).map $(TARGET).asm
