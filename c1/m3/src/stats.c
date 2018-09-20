@@ -25,31 +25,6 @@
 #include "stats.h"
 #include "platform.h"
 
-/* Size of the Data Set */
-#define SIZE (40)
-
-void main() {
-
-    unsigned char test[SIZE] = { 34, 201, 190, 154,   8, 194,   2,   6,
-                              114, 88,   45,  76, 123,  87,  25,  23,
-                              200, 122, 150, 90,   92,  87, 177, 244,
-                              201,   6,  12,  60,   8,   2,   5,  67,
-                                7,  87, 250, 230,  99,   3, 100,  90};
-
-#ifdef VERBOSE
-    PRINTF("\r\nInitial dataset:");
-    print_array(test, SIZE);
-#endif
-
-    PRINTF("\r\nStatistical analytics on the dataset:\r\n");
-    print_statistics(test, SIZE);
-
-#ifdef VERBOSE
-    PRINTF("\r\nSorted dataset:");
-    print_array(test, SIZE);
-#endif
-}
-
 
 void print_statistics(unsigned char * ptr, unsigned int size){
     PRINTF("\tMinimum: %d\r\n", find_minimum(ptr, size));
@@ -59,8 +34,8 @@ void print_statistics(unsigned char * ptr, unsigned int size){
 }
 
 
-#ifdef VERBOSE
 void print_array(unsigned char * ptr, unsigned int size){
+#ifdef VERBOSE
     int i = 0;
     while(i < size){
         if(i%10 == 0){
@@ -74,8 +49,8 @@ void print_array(unsigned char * ptr, unsigned int size){
             PRINTF(".\r\n");
         }
     }
-}
 #endif
+}
 
 
 unsigned char find_median(unsigned char * ptr, unsigned int size){
