@@ -79,7 +79,7 @@ unsigned char find_mean(unsigned char * ptr, unsigned int size){
 
 
 unsigned char find_maximum(unsigned char * ptr, unsigned int size){
-    unsigned char max;
+    unsigned char max = 0;
     unsigned int i = 0;
     if(size > 0){
         max = ptr[i++];
@@ -95,7 +95,7 @@ unsigned char find_maximum(unsigned char * ptr, unsigned int size){
 
 
 unsigned char find_minimum(unsigned char * ptr, unsigned int size){
-    unsigned char min;
+    unsigned char min = 0;
     unsigned int i = 0;
     if(size > 0){
         min = ptr[i++];
