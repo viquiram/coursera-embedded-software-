@@ -113,21 +113,7 @@ uint8_t * my_memset(uint8_t * src, size_t length, uint8_t value){
 }
 
 uint8_t * my_memzero(uint8_t * src, size_t length){
-  unsigned int i;
-
-  if(src == NULL){
-#ifdef VERBOSE
-    PRINTF("Memory Error: Argument is a NULL pointer.\r\n");
-#endif
-  }
-  else{
-    i = 0;
-    while(i < length){
-      *(src + i) = 0;
-      i++;
-    }
-  }
-  return src;
+  return my_memset(src, length, 0);
 }
 
 uint8_t * my_reverse(uint8_t * src, size_t length){
